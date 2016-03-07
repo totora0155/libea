@@ -1,4 +1,4 @@
-import fsp from 'fsp';
+import fsp from 'fs-promise';
 import glob from 'glob';
 import matter from 'gray-matter';
 import component from './component';
