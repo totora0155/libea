@@ -1,4 +1,5 @@
 ---
+parent: base
 title: bar
 ---
 

@@ -1,50 +1,35 @@
 import fsp from 'fs-promise';
 import glob from 'glob';
 import matter from 'gray-matter';
-import component from './component';
+// import component from './component';
 import EventEmitter from 'events';
 
-// state == parentstate == childstate == childchild...
+import store from './store';
 
-const ev = new EventEmitter();
+let libeaConfig;
 
-const cache = new WeakMap();
 
-class Renderer {
-  setState() {}
-  contnetWillRead() {}
-  contentDidRead() {}
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import HTMLtoJSX from 'htmltojsx';
+import babel from 'babel-core';
+import {createComponent} from './component';
+import Processor from './processor';
+
+const _templates = {};
+
+function libea(templates, renderer) {
+  return new Processor(templates, renderer || new libea.Renderer());
 }
 
-function libea(src, /* renderer = new Renderer() */) {
-  glob(src, {}, (err, files) => {
-    if (err) {
-      throw new Error(err);
-    }
+libea.Renderer = class Renderer extends EventEmitter {
+  constructor() {
+    super();
+  }
 
-    if (!files.length) {
-      throw new Error('not exists');
-    }
-
-    ps = src.map(s => fsp.readFile(src, 'utf-8'))
-
-    Promise.all(ps)
-      .then((contents) => {
-        /* ... */
-        data = matter(content);
-        this.setState({
-          opts: bbb,
-          content: aaa,
-        });
-        ev.emit(CONTENT_DID_READ);
-
-
-      });
-  });
-
-  return {
-    Renderer,
-  };
+  contentWillProcess(handle) {
+    this.contentWillProcess = handle;
+  }
 }
 
 export default libea;
